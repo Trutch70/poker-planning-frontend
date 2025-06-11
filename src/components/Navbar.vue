@@ -14,7 +14,7 @@
         display: flex;
         align-items: center;
         padding: 10px;
-        background-color: #f8f9fa;
+        background-color: #0E0B32;
         border-bottom: 1px solid #dee2e6;
         gap: 10px;
         justify-content: center;
@@ -30,7 +30,7 @@
         display: inline-block;
         font-size: 1.5rem;
         font-weight: bold;
-        color: #343a40;
+        color: #eee;
         text-transform: uppercase;
     }
 </style>
