@@ -1,13 +1,34 @@
 <script setup lang="ts">
-import SessionIdInput from './SessionIdInput.vue';
+import RoomIdInput from './RoomIdInput.vue';
+
+const connectToRoom = async (roomId: string) => {
+    console.log('Connecting to session: ', roomId);
+
+    window.location.replace(`/room/${roomId}`);
+}
+
+const createNewRoom = async () => {
+    console.log('Creating a new session...');
+
+    interface ResponseType {
+        id: string;
+        createdAt: string;
+    }
+
+    const response = await fetch("http://localhost:3000/rooms", { method: "POST" });
+    const room = await response.json() as ResponseType;
+
+    console.log(room)
+    // await connectToRoom(room.id);
+}
 </script>
 
 <template>
     <main class="onboarding-page">
         <form class="onboarding-form">
-            <SessionIdInput />
+            <RoomIdInput :on-submit="connectToRoom" />
             <p class="or-text">LUB:</p>
-            <button class="new-session-button">Stwórz nową sesję</button>
+            <button class="new-session-button" @click.prevent="createNewRoom">Stwórz nową sesję</button>
         </form>
     </main>
 </template>

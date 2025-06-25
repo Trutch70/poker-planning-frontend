@@ -1,7 +1,25 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const roomId = ref("");
+
+const props = defineProps<{
+    onSubmit: (roomId: string) => Promise<void> | void
+}>();
+
+const handleSubmit = () => {
+    if (roomId.value.trim() === "") {
+        return;
+    }
+
+    props.onSubmit(roomId.value);
+}
+</script>
+
 <template>
-    <div class="session-id-input-container">
-        <input class="session-id-input" type="text" placeholder="Podaj ID sesji" />
-        <button class="session-id-button" type="submit">
+    <div class="room-id-input-container">
+        <input class="room-id-input" type="text" placeholder="Podaj ID sesji" v-model="roomId" />
+        <button class="room-id-button" @click="handleSubmit">
             →
         </button>
     </div>
@@ -9,7 +27,7 @@
 
 <style lang="scss" scoped>
 
-.session-id-input-container {
+.room-id-input-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -20,7 +38,7 @@
     background: white;
 }
 
-.session-id-input {
+.room-id-input {
     border: none;
     background: none;
     font-size: 20px;
@@ -33,7 +51,7 @@
     }
 }
 
-.session-id-button {
+.room-id-button {
     border: none;
     background: none;
     cursor: pointer;
