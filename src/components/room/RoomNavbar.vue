@@ -3,7 +3,7 @@ import CopyTextButton from '../common/CopyTextButton.vue';
 
     const props = defineProps<{
         sessionId: string;
-        username: string
+        username: string | null
     }>();
 </script>
 
@@ -11,7 +11,7 @@ import CopyTextButton from '../common/CopyTextButton.vue';
     <nav class="room-navbar">
         <img class="logo" src="/bober.svg" alt="Bober Logo" />
         <span>ID Twojej sesji: {{ props.sessionId }} <CopyTextButton :text="props.sessionId" /></span>
-        <span>Użytkownik: {{ props.username }}</span>
+        <span>Użytkownik: {{ props.username ?? '' }}</span>
     </nav>
 </template>
 
