@@ -1,6 +1,12 @@
 ---
+import RoomPage from "../../components/room/RoomPage.vue";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
 export const prerender = false;
 const params = Astro.params;
----
 
-<h1>{params.roomId}</h1>
+---
+<BaseLayout>
+    <RoomPage roomId={params.roomId!} />
+</BaseLayout>
+

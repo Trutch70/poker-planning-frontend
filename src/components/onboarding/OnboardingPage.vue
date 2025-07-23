@@ -2,8 +2,6 @@
 import RoomIdInput from './RoomIdInput.vue';
 
 const connectToRoom = async (roomId: string) => {
-    console.log('Connecting to session: ', roomId);
-
     window.location.replace(`/room/${roomId}`);
 }
 
@@ -18,8 +16,7 @@ const createNewRoom = async () => {
     const response = await fetch("http://localhost:3000/rooms", { method: "POST" });
     const room = await response.json() as ResponseType;
 
-    console.log(room)
-    // await connectToRoom(room.id);
+    await connectToRoom(room.id);
 }
 </script>
 
