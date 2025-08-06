@@ -19,7 +19,7 @@ const handleSubmit = () => {
 <template>
     <div class="room-id-input-container">
         <input class="room-id-input" type="text" placeholder="Podaj ID sesji" v-model="roomId" />
-        <button class="room-id-button" @click="handleSubmit">
+        <button class="room-id-button" @click.prevent="handleSubmit">
             →
         </button>
     </div>
