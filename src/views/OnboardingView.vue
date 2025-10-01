@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import RoomIdInput from './RoomIdInput.vue';
+import AppLayout from '@/components/AppLayout.vue';
+import RoomIdInput from '@/components/onboarding/RoomIdInput.vue';
 
 const connectToRoom = async (roomId: string) => {
     window.location.replace(`/room/${roomId}`);
@@ -21,14 +22,17 @@ const createNewRoom = async () => {
 </script>
 
 <template>
-    <main class="onboarding-page">
+  <AppLayout>
+    <section class="onboarding-page">
         <form class="onboarding-form">
             <RoomIdInput :on-submit="connectToRoom" />
             <p class="or-text">LUB:</p>
             <button class="new-session-button" @click.prevent="createNewRoom">Stwórz nową sesję</button>
         </form>
-    </main>
+    </section>
+  </AppLayout>
 </template>
+
 
 <style lang="scss" scoped>
 .onboarding-page {

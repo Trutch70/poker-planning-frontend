@@ -1,10 +1,8 @@
-
-
 <template>
     <nav>
         <div class="app-banner">
             <h1 class="app-title">BOBER PLANNING</h1>
-            <img class="logo" src="/bober.svg" alt="Bober Logo" />
+            <img class="logo" src="../assets/bober.svg" alt="Bober Logo" />
         </div>
     </nav>
 </template>
