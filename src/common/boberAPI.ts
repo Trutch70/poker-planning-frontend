@@ -1,8 +1,7 @@
 export const boberAPI = {
     joinRoom: async (roomId: string) => {
         try {
-            console.log(import.meta.env.API_HOST);
-            const response = await fetch(`${import.meta.env.PUBLIC_API_HOST}/rooms/${roomId}/join`, {
+            const response = await fetch(`${import.meta.env.VITE_PUBLIC_API_HOST}/rooms/${roomId}/join`, {
                 method: 'POST'
             });
 
