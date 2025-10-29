@@ -10,4 +10,9 @@ export const boberAPI = {
             console.log('kurde no', e);
         }
     },
+    getRoomDetails: async (roomId: string) => {
+      const response = await fetch(`${import.meta.env.VITE_PUBLIC_API_HOST}/rooms/${roomId}`);
+
+      return await response.json();
+    }
 };

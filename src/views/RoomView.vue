@@ -4,6 +4,8 @@ import RoomNavbar from '@/components/room/RoomNavbar.vue';
 import { useUserStore } from '@/stores/username';
 import { useRoute } from 'vue-router';
 import {ref} from "vue";
+import RoomTable from "@/components/room/RoomTable.vue";
+import type {Card} from "@/components/room/UserCard.vue";
 
 const route = useRoute();
 
@@ -13,6 +15,7 @@ if (roomId === undefined || Array.isArray(roomId)) {
 }
 
 const userStore = useUserStore();
+const room = ref(null);
 const taskName = ref("");
 
 if (!userStore.roomUsernames[roomId]) {
@@ -21,6 +24,17 @@ if (!userStore.roomUsernames[roomId]) {
     userStore.setUsername(roomId, usernameResponse);
   });
 }
+
+boberAPI.getRoomDetails(roomId).then((roomResponse) => {
+  room.value = roomResponse;
+})
+
+const cards : Card[] = [
+  {
+    username: 'blabla',
+    estimate: '3'
+  }
+];
 
 </script>
 
@@ -31,6 +45,7 @@ if (!userStore.roomUsernames[roomId]) {
         <div class="page__main">
           <input v-model="taskName" placeholder="Nazwa taska" class="page__input"  />
           <p>Your room ID is: {{ taskName }}</p>
+          <RoomTable :cards="cards" :actionButtonText="'Pokaż'"/>
         </div>
         <div class="page__sidebar">
           <div class="sidebar__current-task">
