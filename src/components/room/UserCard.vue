@@ -23,26 +23,26 @@ const props = defineProps<Card>();
       display: flex;
       justify-content: center;
       flex-direction: column;
-      margin: 20px;
+      margin: 12px;
       gap: 5px;
       align-items: center;
     }
 
     &__card {
-      width: 85px;
-      height: 116px;
+      width: 65px;
+      height: 85px;
       background: #E0CCB6;
       border: 4px solid #3D0006;
       border-radius: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 36px;
+      font-size: 26px;
       color: black;
     }
 
     &__username {
-      font-size: 24px;
+      font-size: 18px;
     }
   }
 </style>

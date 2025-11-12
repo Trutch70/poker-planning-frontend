@@ -29,13 +29,23 @@ boberAPI.getRoomDetails(roomId).then((roomResponse) => {
   room.value = roomResponse;
 })
 
-const cards : Card[] = [
-  {
-    username: 'blabla',
-    estimate: '3'
-  }
-];
+// const cards : Card[] = [
+//   {
+//     username: 'blabla',
+//     estimate: '3'
+//   },  {
+//     username: 'blabla',
+//     estimate: '3'
+//   },  {
+//     username: 'blabla',
+//     estimate: '3'
+//   }
+// ];
 
+const cards : Card[] = Array.from({ length: 5 }, (_, i) => ({
+  username: `User${i + 1}`,
+  estimate: (i + 1).toString()
+}));
 </script>
 
 <template>
