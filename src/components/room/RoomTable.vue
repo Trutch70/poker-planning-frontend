@@ -9,17 +9,6 @@ interface RoomTableProps {
 
 const props = defineProps<RoomTableProps>();
 
-// const tableMap = {
-//   1: ["TOP"],
-//   2: ["TOP", "BOTTOM"],
-//   3: ["TOP", "BOTTOM", "BOTTOM"],
-//   4: ["TOP", "TOP", "BOTTOM", "BOTTOM"],
-//   5: ["TOP", "TOP", "BOTTOM", "LEFT", "RIGHT"],
-//   6: ["TOP", "TOP", "BOTTOM", "LEFT", "RIGHT", "BOTTOM"],
-//   7: ["TOP", "TOP", "BOTTOM", "LEFT", "RIGHT", "BOTTOM", "TOP"],
-//   8: ["TOP", "TOP", "BOTTOM", "LEFT", "RIGHT", "BOTTOM", "TOP", "BOTTOM"],
-// }
-
 const sliceTable = (cards: Card[]) => {
   if (cards.length <= 4) {
     return {

@@ -53,12 +53,16 @@ const cards : Card[] = Array.from({ length: 5 }, (_, i) => ({
       <RoomNavbar :session-id="roomId" :username="userStore.roomUsernames[roomId] || ''" />
       <div class="page__container">
         <div class="page__main">
-          <input v-model="taskName" placeholder="Nazwa taska" class="page__input"  />
-          <p>Your room ID is: {{ taskName }}</p>
-          <RoomTable :cards="cards" :actionButtonText="'Pokaż'"/>
+          <div class="page__tableWithAnswers">
+            <input v-model="taskName" placeholder="Nazwa taska" class="page__input" :value="{{ taskName }}" />
+            <RoomTable :cards="cards" :actionButtonText="'Pokaż'"/>
+          </div>
+          <div class="page__votingCards">
+            <p>Karty do głosowania (do zaimplementowania)</p>
+          </div>
         </div>
         <div class="page__sidebar">
-          <div class="sidebar__current-task">
+          <div class="sidebar__currentTask">
             <p>{{ taskName }}</p>
             <p>?</p>
           </div>
@@ -85,6 +89,8 @@ const cards : Card[] = Array.from({ length: 5 }, (_, i) => ({
       flex: 4;
       background: #FDF0D5;
       padding: 20px;
+      display: flex;
+      flex-direction: column;
     }
 
     &__sidebar {
@@ -103,10 +109,19 @@ const cards : Card[] = Array.from({ length: 5 }, (_, i) => ({
       padding: 20px;
       min-width: 150px;
     }
+
+    &__tableWithAnswers {
+      flex: 1;
+    }
+
+    &__votingCards {
+      background: #D9B99B;
+      padding: 20px;
+    }
   }
 
   .sidebar {
-    &__current-task {
+    &__currentTask {
       display: flex;
       justify-content: space-between;
       font-size: 24px;
