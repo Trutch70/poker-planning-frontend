@@ -40,7 +40,7 @@ const arrangedCards = sliceTable(props.cards);
         <UserCard v-for="{ username, estimate } in arrangedCards.left" v-bind:key="username" :username="username" :estimate="estimate"/>
       </div>
       <div class="roomTable__table">
-        <button class="roomTable__button">{{ props.actionButtonText }}</button>
+        <button class="roomTable__button" v-on:click="props.onActionButtonClick">{{ props.actionButtonText }}</button>
       </div>
       <div>
       <div>

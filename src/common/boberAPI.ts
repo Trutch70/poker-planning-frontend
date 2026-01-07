@@ -14,5 +14,17 @@ export const boberAPI = {
       const response = await fetch(`${import.meta.env.VITE_PUBLIC_API_HOST}/rooms/${roomId}`);
 
       return await response.json();
+    },
+    submitEstimate: async (taskId: string, username: string, estimate: string) => {
+      await fetch(`${import.meta.env.VITE_PUBLIC_API_HOST}/tasks/${taskId}/estimate`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+          username,
+          estimate
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
     }
 };

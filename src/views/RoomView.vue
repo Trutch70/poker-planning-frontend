@@ -3,9 +3,24 @@ import { boberAPI } from '@/common/boberAPI';
 import RoomNavbar from '@/components/room/RoomNavbar.vue';
 import { useUserStore } from '@/stores/username';
 import { useRoute } from 'vue-router';
-import {ref} from "vue";
-import RoomTable from "@/components/room/RoomTable.vue";
-import type {Card} from "@/components/room/UserCard.vue";
+import {ref, watch} from "vue";
+import VotingScreen from '@/components/room/VotingScreen.vue';
+
+// New interfaces based on the provided JSON
+interface Task {
+  id: number;
+  name: string;
+  finalEstimate: number | null;
+  estimates: Record<string, number>;
+  answersShown: boolean;
+}
+
+interface Room {
+  id: string;
+  createdAt: string; // ISO string from backend
+  tasks: Task[];
+  participants: string[];
+}
 
 const route = useRoute();
 
@@ -15,8 +30,9 @@ if (roomId === undefined || Array.isArray(roomId)) {
 }
 
 const userStore = useUserStore();
-const room = ref(null);
-const taskName = ref("");
+// Typed room ref
+const room = ref<Room | null>(null);
+const selectedTask = ref<Task | null>(null);
 
 if (!userStore.roomUsernames[roomId]) {
   boberAPI.joinRoom(roomId).then((usernameResponse) => {
@@ -25,46 +41,32 @@ if (!userStore.roomUsernames[roomId]) {
   });
 }
 
-boberAPI.getRoomDetails(roomId).then((roomResponse) => {
+boberAPI.getRoomDetails(roomId).then((roomResponse: Room) => {
   room.value = roomResponse;
+
+  if (roomResponse.tasks.length > 0) {
+    selectedTask.value = roomResponse.tasks[0] ?? null;
+  }
 })
 
-// const cards : Card[] = [
-//   {
-//     username: 'blabla',
-//     estimate: '3'
-//   },  {
-//     username: 'blabla',
-//     estimate: '3'
-//   },  {
-//     username: 'blabla',
-//     estimate: '3'
-//   }
-// ];
-
-const cards : Card[] = Array.from({ length: 5 }, (_, i) => ({
-  username: `User${i + 1}`,
-  estimate: (i + 1).toString()
-}));
+const onSelectedTaskRename = (newName: string) => {
+  if (selectedTask.value) {
+    selectedTask.value.name = newName;
+  }
+};
 </script>
 
 <template>
     <section class="page">
       <RoomNavbar :session-id="roomId" :username="userStore.roomUsernames[roomId] || ''" />
       <div class="page__container">
-        <div class="page__main">
-          <div class="page__tableWithAnswers">
-            <input v-model="taskName" placeholder="Nazwa taska" class="page__input" :value="{{ taskName }}" />
-            <RoomTable :cards="cards" :actionButtonText="'Pokaż'"/>
-          </div>
-          <div class="page__votingCards">
-            <p>Karty do głosowania (do zaimplementowania)</p>
-          </div>
-        </div>
+        <VotingScreen v-if="selectedTask !== null" :task-name="selectedTask.name" @update:task-name="onSelectedTaskRename($event)" />
         <div class="page__sidebar">
-          <div class="sidebar__currentTask">
-            <p>{{ taskName }}</p>
-            <p>?</p>
+          <div v-if="room !== null">
+            <div v-for="task of room.tasks" v-bind:key="task.id" class="page__task" @click="selectedTask = task">
+              <p>{{ task.name }}</p>
+              <p>{{ task.finalEstimate ?? "?" }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -118,14 +120,20 @@ const cards : Card[] = Array.from({ length: 5 }, (_, i) => ({
       background: #D9B99B;
       padding: 20px;
     }
-  }
 
-  .sidebar {
-    &__currentTask {
+    &__sidebar {
+
+    }
+
+    &__task {
       display: flex;
       justify-content: space-between;
       font-size: 24px;
       line-height: 30px;
+
+      &--selected {
+        font-weight: bold;
+      }
     }
   }
 </style>
